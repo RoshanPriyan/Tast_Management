@@ -1,0 +1,25 @@
+fast_api_learn/
+                |- lenv
+                |- database.py
+                |- main.py
+                |- readme.txt
+                |- utils.py
+                |- middleware.py
+                task/
+                      |- __init__.py
+                      |- models.py
+                      |- schema.py
+                      |- views/
+                                |- __init__.py
+                                |- create_task_api.py
+                                |- delete_task_api.py
+                                |- task_list_api.py
+                                |- update_task_api.py
+                 user/
+                      |- __init__.py
+                      |- models.py
+                      |- schema.py
+                      |- views/
+                                |- __init__.py
+                                |- register.py
+                                |- login.py
