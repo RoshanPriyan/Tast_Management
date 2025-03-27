@@ -1,0 +1,50 @@
+from fastapi import status, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
+from sqlalchemy.exc import SQLAlchemyError
+from utils import success_response, CustomException, verify_token
+from database import get_db
+from book.schemas import BookSchema
+from book.models import BookModel
+from users.models import UserModel
+import traceback
+
+
+async def create_book_api(
+        data: BookSchema,
+        session: AsyncSession = Depends(get_db),
+        token_user: int = Depends(verify_token)
+):
+    try:
+        check_user = select(UserModel.role).where(UserModel.id == token_user)
+        check_user_exe = await session.execute(check_user)
+        role = check_user_exe.scalars().first()
+
+        if role != "ADMIN":
+            raise CustomException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Only 'ADMIN' can create book"
+            )
+
+        add_book = BookModel(
+            title=data.title,
+            description=data.description,
+            author=data.author,
+            count=data.count,
+            user_id=token_user
+        )
+        session.add(add_book)
+        await session.commit()
+
+        return success_response(
+            status_code=status.HTTP_200_OK,
+            detail="Book created successfully"
+        )
+    except SQLAlchemyError as e:
+        await session.rollback()
+        raise CustomException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Internal Server Error {e}",
+            error=str(e),
+            trace_back=traceback.format_exc()
+        )
