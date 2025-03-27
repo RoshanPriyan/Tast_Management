@@ -1,3 +1,9 @@
+Application Overview
+* User Management → Register/Login users.
+* Task Management → CRUD operations for tasks.
+* Book Management → Create and manage books.
+* Database Integration → Uses SQLAlchemy with async support
+
 fast_api_learn/
     |- lenv
     |- database.py
