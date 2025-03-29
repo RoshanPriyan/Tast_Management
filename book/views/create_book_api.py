@@ -2,7 +2,7 @@ from fastapi import status, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
-from utils import success_response, CustomException, verify_token
+from global_utils import success_response, CustomException, verify_token
 from database import get_db
 from book.schemas import BookSchema
 from book.models import BookModel
@@ -31,7 +31,8 @@ async def create_book_api(
             description=data.description,
             author=data.author,
             count=data.count,
-            user_id=token_user
+            user_id=token_user,
+            available_count=data.count
         )
         session.add(add_book)
         await session.commit()

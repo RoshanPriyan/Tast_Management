@@ -3,7 +3,7 @@ from database import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from ..models import TaskModel
-from utils import success_response, CustomException
+from global_utils import success_response, CustomException
 import traceback
 
 async def list_tasks_api(

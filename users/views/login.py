@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
 from ..models import UserModel, UserAuthInfoModel
 from ..schemas import LoginSchema
-from utils import success_response, CustomException, generate_token
+from global_utils import success_response, CustomException, generate_token
 from database import get_db
 import traceback
 

@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, TIMESTAMP, func
+from sqlalchemy.orm import relationship
 from database import Base
 
 
@@ -11,5 +12,21 @@ class BookModel(Base):
     author = Column(String(100), nullable=False)
     count = Column(Integer, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    available_count = Column(Integer, nullable=True)
 
-    # book = relationship("UserModel", back_populates="book_user")
+    borrowed_books = relationship("BorrowBookModel", back_populates="book")
+
+
+class BorrowBookModel(Base):
+    __tablename__ = "borrowed_books"
+
+    STATUS = ["BORROWED", "RETURNED"]
+
+    id = Column(Integer, primary_key=True, autoincrement=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    book_id = Column(Integer, ForeignKey("book.id", ondelete="CASCADE"), nullable=False)
+    borrow_date = Column(TIMESTAMP, server_default=func.current_timestamp())
+    return_date = Column(TIMESTAMP, nullable=True)
+    status = Column(String, nullable=False)
+
+    book = relationship("BookModel", back_populates="borrowed_books")

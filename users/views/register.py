@@ -2,7 +2,7 @@ from fastapi import Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import select
-from utils import CustomException, success_response
+from global_utils import CustomException, success_response
 from ..models import UserModel
 from ..schemas import UserSchema
 from database import get_db

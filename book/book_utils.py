@@ -1,7 +1,7 @@
 from fastapi import status, Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from utils import CustomException
+from global_utils import CustomException
 from users.models import UserModel
 from database import get_db
 

@@ -3,7 +3,7 @@ from ..models import TaskModel
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from database import get_db
-from utils import CustomException, success_response
+from global_utils import CustomException, success_response
 import traceback
 from sqlalchemy.exc import SQLAlchemyError
 import json

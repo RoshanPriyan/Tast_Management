@@ -4,7 +4,7 @@ from sqlalchemy import insert
 from ..models import TaskModel
 from database import get_db
 from ..schema import TaskSchema
-from utils import success_response, CustomException, verify_token
+from global_utils import success_response, CustomException, verify_token
 import traceback
 
 

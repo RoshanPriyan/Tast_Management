@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from typing import Optional
 
 
 class BookSchema(BaseModel):
@@ -7,3 +6,7 @@ class BookSchema(BaseModel):
     description: str
     author: str
     count: int
+
+
+class BorrowBookSchema(BaseModel):
+    pass

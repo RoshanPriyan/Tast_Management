@@ -4,7 +4,7 @@ from fastapi import Depends, status
 from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
-from utils import CustomException, success_response, verify_token
+from global_utils import CustomException, success_response, verify_token
 from database import get_db
 from book.models import BookModel
 from book.book_utils import check_admin_user

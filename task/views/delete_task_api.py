@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..models import TaskModel
 from sqlalchemy import select, delete
 from database import get_db
-from utils import CustomException, success_response
+from global_utils import CustomException, success_response
 import traceback
 
 

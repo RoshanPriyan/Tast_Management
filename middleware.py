@@ -74,7 +74,7 @@ from fastapi import Request
 from sqlalchemy.exc import SQLAlchemyError
 from starlette.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
-from utils import CustomException
+from global_utils import CustomException
 import traceback
 
 

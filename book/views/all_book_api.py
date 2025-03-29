@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
 from database import get_db
-from utils import success_response, CustomException, verify_token
+from global_utils import success_response, CustomException, verify_token
 from book.models import BookModel
 import traceback
 

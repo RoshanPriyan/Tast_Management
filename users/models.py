@@ -37,7 +37,7 @@ class UserModel(Base):
     @staticmethod
     def validate_role(role):
         """ Validates if the role is either ADMIN or USER """
-        from utils import CustomException
+        from global_utils import CustomException
         if role.upper() not in UserModel.ROLE:
             raise CustomException(
                 status_code=status.HTTP_400_BAD_REQUEST,
