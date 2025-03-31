@@ -25,6 +25,15 @@ async def create_book_api(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Only 'ADMIN' can create book"
             )
+        check_book_exist = select(BookModel).where(BookModel.title == data.title)
+        check_book_exist_exe = await session.execute(check_book_exist)
+        book_exist = check_book_exist_exe.scalars().one_or_none()
+
+        if book_exist:
+            raise CustomException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Book already exist"
+            )
 
         add_book = BookModel(
             title=data.title,

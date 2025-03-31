@@ -7,7 +7,7 @@ class BookModel(Base):
     __tablename__ = "book"
 
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
-    title = Column(String(500), nullable=False)
+    title = Column(String(500), unique=True, nullable=False)
     description = Column(String(500), nullable=False)
     author = Column(String(100), nullable=False)
     count = Column(Integer, nullable=False)
