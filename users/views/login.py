@@ -1,4 +1,4 @@
-from fastapi import status, Depends
+from fastapi import status, Depends, BackgroundTasks
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import SQLAlchemyError
@@ -7,10 +7,12 @@ from ..schemas import LoginSchema
 from global_utils import success_response, CustomException, generate_token
 from database import get_db
 import traceback
+from tasks import confirm_email_status
 
 
 async def user_login_api(
         data: LoginSchema,
+        background: BackgroundTasks,
         session: AsyncSession = Depends(get_db)
 ):
     try:
@@ -23,7 +25,14 @@ async def user_login_api(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Invalid username or password"
             )
-        
+
+        if existing_user.status == 0:
+            background.add_task(confirm_email_status, existing_user.username, existing_user.email)
+            raise CustomException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="User is not active"
+            )
+
         user_detail = {"user_id": existing_user.id}
         token = generate_token(user_detail)
 
@@ -46,7 +55,7 @@ async def user_login_api(
                  .values(token=token)
                  )
             await session.execute(refresh_token)
-        
+
         await session.commit()
 
         user_data = {

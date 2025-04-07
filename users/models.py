@@ -16,6 +16,7 @@ class UserModel(Base):
     hash_password = Column(String(500), unique=True, nullable=False)
     created_date = Column(TIMESTAMP, server_default=func.current_timestamp())
     role = Column(String, nullable=False)
+    status = Column(Integer, default=0, nullable=True)
 
     auth_info = relationship("UserAuthInfoModel", back_populates="user", cascade="all, delete")
     task_user = relationship("TaskModel", back_populates="task")
